@@ -9,6 +9,17 @@ use Validator;
 
 class RolesController extends Controller
 {
+    public function getRoleList()
+    {
+        $rolelist= Roles::select('id', 'role_name')
+        ->where('status','=','0')
+        ->orderBy('role_name','asc')
+        ->get();
+        return response()->json(["message" => "List of Roles :", 'list' => $rolelist, "code" => 200]);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////
     public function index()
     {
         $list= Roles::select('id', 'role_name', 'status')->orderBy('role_name','asc')->get();
@@ -23,7 +34,7 @@ class RolesController extends Controller
 
     public function branch_view_list()
     {
-        $list= Roles::select('id', 'role_name', 'status')->where('role_name','!=','System Admin')->where('status','=','0')->orderBy('role_name','asc')->get();
+        $list= Roles::select('id', 'role_name', 'status')->where('status','=','0')->orderBy('role_name','asc')->get();
         return response()->json(["message" => "List.", 'list' => $list, "code" => 200]);
     }
 

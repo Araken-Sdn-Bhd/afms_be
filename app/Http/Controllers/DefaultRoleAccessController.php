@@ -13,7 +13,7 @@ class DefaultRoleAccessController extends Controller
 {
     public function store(Request $request)
     {
-       
+    
         $validator = Validator::make($request->all(), [
             'module_id' => 'required',
         ]);
@@ -66,8 +66,9 @@ class DefaultRoleAccessController extends Controller
     public function listbyId(Request $request)
     {
         $list = DB::table('default_role_access')
-        ->select('default_role_access.id','screens.module_name','screens.screen_name','screens.screen_route','screens.screen_description')
+        ->select('default_role_access.id','screen_modules.module_name','screens.screen_name','screens.screen_route','screens.screen_description')
         ->join('screens','screens.id','=','default_role_access.screen_id')
+        ->join('screen_modules','screens.module_id','=','screen_modules.id')
         ->where('default_role_access.role_id',$request->role_id)
         ->get();
 

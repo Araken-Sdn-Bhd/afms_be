@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\RoleModules;
+//use App\Models\RoleModules;
 
 class Roles extends Model
 {
@@ -21,8 +21,8 @@ class Roles extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function modules()
-    {
-        return $this->hasMany(RoleModules::class, 'role_id', 'id');
-    }
+    //public function modules()
+    //{
+    //    return $this->hasMany(RoleModules::class, 'role_id', 'id');
+    //}
 }

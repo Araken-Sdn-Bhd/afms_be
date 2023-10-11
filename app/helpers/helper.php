@@ -5,7 +5,7 @@ if (!function_exists('upload_file')) {
     {
         try {
             $path = $file->store('assets/' . $folder_name, 'public');
-            return response()->json(['code' => 200, 'path' => env('APP_URL') . '/storage/' . $path]);
+            return response()->json(['code' => 200, 'path' => '/storage/' . $path]);
         } catch (Exception $e) {
             return response()->json(['code' => 500, 'path' => $e->getMessage()]);
         }
