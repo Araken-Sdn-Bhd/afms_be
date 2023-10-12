@@ -18,6 +18,7 @@ use App\Http\Controllers\SalesTransactionController;
 use App\Models\SalesTransaction;
 
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,4 +160,10 @@ Route::group(['prefix' => 'files'], function () {
     Route::post('/fileList', [FilesController::class, 'fileList']);
     Route::post('/fileStore', [FilesController::class, 'fileStore']);
     Route::post('/deleteFile', [FilesController::class, 'deleteFile']);
+});
+
+Route::group(['prefix' => 'clients'], function () {
+    Route::post('/clientList', [ClientController::class, 'clientList']);
+    Route::post('/deleteClient', [ClientController::class, 'deleteClient']);
+    Route::post('/clientStore', [ClientController::class, 'clientStore']);
 });
