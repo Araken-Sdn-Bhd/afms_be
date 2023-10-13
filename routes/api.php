@@ -19,6 +19,7 @@ use App\Models\SalesTransaction;
 
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\TenderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'modules'], function () {
     Route::post('/update', [ModulesController::class, 'update']);
     Route::post('/remove', [ModulesController::class, 'delete']);
     Route::get('/get-child/{type}', [ModulesController::class, 'get_child_from_type']);
-}); 
+});
 
 Route::group(['prefix' => 'reset'], function () {
     Route::post('/password', [PasswordController::class, 'resetPassword']);
@@ -166,4 +167,9 @@ Route::group(['prefix' => 'clients'], function () {
     Route::post('/clientList', [ClientController::class, 'clientList']);
     Route::post('/deleteClient', [ClientController::class, 'deleteClient']);
     Route::post('/clientStore', [ClientController::class, 'clientStore']);
+    Route::get('/getClient', [ClientController::class, 'getClient']);
+});
+
+Route::group(['prefix' => 'tender'], function(){
+    Route::post('/NewTender', [TenderController::class, 'createNewTender']);
 });

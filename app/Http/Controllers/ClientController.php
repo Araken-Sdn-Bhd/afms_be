@@ -54,5 +54,11 @@ class ClientController extends Controller
             return response()->json(["message" => "Record Successfully Saved", "code" => 200]);
         }
     }
-    
+
+    public function getClient() {
+        $list = Clients::select('client_name')
+        ->where('client_status', '=', '1')
+        ->get();
+        return response()->json(["message" => "Client List", 'list' => $list, "code" => 200]);
+    }
 }
