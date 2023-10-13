@@ -134,9 +134,9 @@ Route::group(['prefix' => 'system-settings'], function () {
 Route::group(['prefix' => 'general-setting'], function () {
     Route::post('/add', [GeneralSettingController::class, 'add']);
     Route::get('/lists', [GeneralSettingController::class, 'getListSetting']);
-    //Route::post('/fetch', [GeneralSettingController::class, 'getSettingById']);
-    Route::post('/update', [GeneralSettingController::class, 'update']);
-    Route::post('/remove', [GeneralSettingController::class, 'remove']);
+    Route::get('/typeList', [GeneralSettingController::class, 'typeList']);
+    Route::post('/typeSearchList', [GeneralSettingController::class, 'typeSearchList']);
+    Route::post('/deleteSetting', [GeneralSettingController::class, 'deleteSetting']);
 });
 
 Route::group(['prefix' => 'inventory'], function () {
