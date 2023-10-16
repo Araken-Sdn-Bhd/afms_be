@@ -171,6 +171,7 @@ Route::group(['prefix' => 'clients'], function () {
 });
 
 Route::group(['prefix' => 'tender'], function(){
-    Route::post('/NewTender', [TenderController::class, 'createNewTender']);
+    Route::post('/newTender', [TendersController::class, 'createNewTender']);
     Route::post('/tenderList', [TendersController::class, 'tenderList']);
+    Route::post('/getTender', [TendersController::class, 'getTender']);
 });
