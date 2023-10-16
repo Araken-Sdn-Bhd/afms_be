@@ -38,4 +38,34 @@ class TendersController extends Controller
         ];
         Tenders::create($tender);
     }
+
+    public function tenderList(Request $request){
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+        if($date_from && $date_to){
+            $fileList = Tenders::select('*')
+            ->whereDate('submission_date', '>=', $date_from)
+            ->whereDate('submission_date', '<=', $date_to)
+            ->orderBy('title','asc')
+            ->get();
+        }
+        else if($date_from && !$date_to){
+            $fileList = Tenders::select('*')
+            ->whereDate('submission_date', '>=', $date_from)
+            ->orderBy('title','asc')
+            ->get();
+        }
+        else if(!$date_from && $date_to){
+            $fileList = Tenders::select('*')
+            ->whereDate('submission_date', '<=', $date_to)
+            ->orderBy('title','asc')
+            ->get();
+        }
+        else{
+            $fileList = Tenders::select('*')
+            ->orderBy('title','asc')
+            ->get();
+        }
+       return response()->json(["message" => "Tender List", 'list' => $fileList, "code" => 200]);
+   }
 }

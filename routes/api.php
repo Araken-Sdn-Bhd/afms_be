@@ -19,7 +19,7 @@ use App\Models\SalesTransaction;
 
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\TenderController;
+use App\Http\Controllers\TendersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,4 +172,5 @@ Route::group(['prefix' => 'clients'], function () {
 
 Route::group(['prefix' => 'tender'], function(){
     Route::post('/NewTender', [TenderController::class, 'createNewTender']);
+    Route::post('/tenderList', [TendersController::class, 'tenderList']);
 });
