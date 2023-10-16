@@ -56,9 +56,9 @@ class ClientController extends Controller
     }
 
     public function getClient() {
-        $list = Clients::select('client_name')
+        $clientlist = Clients::select('client_id','client_name')
         ->where('client_status', '=', '1')
         ->get();
-        return response()->json(["message" => "Client List", 'list' => $list, "code" => 200]);
+        return response()->json(["message" => "Client List", 'list' => $clientlist, "code" => 200]);
     }
 }
