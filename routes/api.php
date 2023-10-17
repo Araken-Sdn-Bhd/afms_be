@@ -86,7 +86,6 @@ Route::group(['prefix' => 'default-role-access'], function () {
 
 Route::group(['prefix' => 'staff-record'], function () {
     Route::get('/getStaffList', [StaffManagementController::class, 'getStaffList']);
-    Route::get('/getStaffList/{code}', [StaffManagementController::class, 'getStaffListbyCode']);
     Route::post('/getStaffListbyId', [StaffManagementController::class, 'getStaffListbyId']);
     Route::post('/createNewStaff', [StaffManagementController::class, 'createNewStaff']);
     Route::post('/isExistNric', [StaffManagementController::class, 'isExistNric']);
