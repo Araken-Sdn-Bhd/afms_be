@@ -18,10 +18,9 @@ class StaffManagementController extends Controller
     public function getStaffList()
     {
         $userList = DB::table('staff_management')
-        ->select('staff_management.staff_id','staff_management.name','staff_management.nric_no','staff_management.contact_no','users.email','manager.name as manager','users.status as status','roles.role_name as role','users.id as user_id')
+        ->select('staff_management.staff_id','staff_management.name','staff_management.nric_no','staff_management.contact_no','users.email','users.status as status','roles.role_name as role','users.id as user_id')
         ->leftJoin('users','users.staff_id','=','staff_management.staff_id')
-        ->leftJoin('Roles','roles.id','=','users.role_id')
-        ->leftJoin('staff_management as manager','manager.staff_id','=','staff_management.reporting_manager_id')
+        ->leftJoin('roles','roles.id','=','users.role_id')
         ->orderBy('staff_management.name','asc')
         ->get();
 
@@ -31,7 +30,6 @@ class StaffManagementController extends Controller
             $item->nric_no = $item->nric_no ?? '-';
             $item->contact_no = $item->contact_no ?? '-';
             $item->email = $item->email ?? '-';
-            $item->manager = strtoupper($item->manager) ?? '-';
             $item->role = strtoupper($item->role) ?? '-';
             
             if($item->status == 0){
@@ -44,44 +42,13 @@ class StaffManagementController extends Controller
         }
         return response()->json(["message" => "Staff List", 'list' => $userList, "code" => 200]);
     }
-    public function getStaffListbyCode($code)
-    {
-        $userList = DB::table('staff_management')
-        ->select('staff_management.staff_id','staff_management.name','staff_management.nric_no','staff_management.contact_no','users.email','manager.name as manager','users.status as status','roles.role_name as role')
-        ->leftJoin('users','users.staff_id','=','staff_management.staff_id')
-        ->leftJoin('Roles','roles.id','=','users.role_id')
-        ->leftJoin('staff_management as manager','manager.staff_id','=','staff_management.reporting_manager_id')
-        ->where('roles.code',$code)
-        ->orderBy('staff_management.name','asc')
-        ->get();
-        
-        foreach($userList as $item){
-        
-            $item->name  =  strtoupper($item->name) ?? '-';
-            $item->nric_no = $item->nric_no ?? '-';
-            $item->contact_no = $item->contact_no ?? '-';
-            $item->email = $item->email ?? '-';
-            $item->manager = strtoupper($item->manager) ?? '-';
-            $item->role = strtoupper($item->role) ?? '-';
-            
-            if($item->status == 0){
-                $item->status = 'Active'; 
-            }
-            if($item->status == 1){
-                $item->status = 'Inactive'; 
-            }
-            
-        }
-       
-        return response()->json(["message" => "Staff List by code :", 'list' => $userList, "code" => 200]);
-    }
+
     public function getStaffListbyId(Request $request)
     {
         $userList = DB::table('staff_management')
-        ->select('staff_management.staff_id','staff_management.name','staff_management.nric_no','staff_management.contact_no','users.email','manager.staff_id as manager_id','manager.name as manager_name','users.status as status','roles.id as role_id','roles.role_name as role')
+        ->select('staff_management.staff_id','staff_management.name','staff_management.nric_no','staff_management.contact_no','users.email','users.status as status','roles.id as role_id','roles.role_name as role')
         ->leftJoin('users','users.staff_id','=','staff_management.staff_id')
-        ->leftJoin('Roles','roles.id','=','users.role_id')
-        ->leftJoin('staff_management as manager','manager.staff_id','=','staff_management.reporting_manager_id')
+        ->leftJoin('roles','roles.id','=','users.role_id')
         ->where('staff_management.staff_id',$request->staff_id)
         ->first();
         
@@ -95,7 +62,6 @@ class StaffManagementController extends Controller
             'name' => $request->name,
             'nric_no' => $request->nric_no,
             'contact_no' => $request->contact_no,
-            'reporting_manager_id' => $request->reporting_manager_id,
         ];
 
         if($request->editId ==''){
