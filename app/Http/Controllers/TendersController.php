@@ -26,6 +26,19 @@ class TendersController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors(), "code" => 422]);
         }
+        $tr_files = $request->file('tender_requirement');
+        $tech_files = $request->file('technical_doc_loc');
+        $finance_files = $request->file('financial_doc_loc');
+        $other_files = $request->file('other_doc_loc');
+        // $fileName = $files->getClientOriginalName();
+        $isUploaded = upload_file($tr_files, 'tender/tender_requirement/' .$request->email);
+        $isUploaded = upload_file($tech_files, 'tender/technical/' .$request->email);
+        $isUploaded = upload_file($finance_files, 'tender/financial/' .$request->email);
+        $isUploaded = upload_file($other_files, 'tender/other/' .$request->email);
+        $tender_requirement = $isUploaded->getData()->path;
+        $technical_doc = $isUploaded->getData()->path;
+        $financial_doc = $isUploaded->getData()->path;
+        $other_doc = $isUploaded->getData()->path;
 
         $tender = [
             'client_id'=>$request->client_id,
@@ -35,10 +48,14 @@ class TendersController extends Controller
             'submission_price'=>$request->submission_price,
             'reference_no'=>$request->reference_no,
             'remark'=>$request->remark,
+            'tender_requirement'=>$tender_requirement,
+            'technical_doc_loc'=>$technical_doc,
+            'financial_doc_loc'=>$financial_doc,
+            'other_loc_loc'=>$other_doc,
 
         ];
-        // dd($tender);
         Tenders::create($tender);
+        dd($tender);
         return response()->json(["message" => "Record Successfully Saved", "code" => 200]);
     }
 
